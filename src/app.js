@@ -1,3 +1,5 @@
+import events from './events.js';
+
 import Header from '../components/Header/Header.js';
 import Home from '../components/Home/Home.js';
 import Activity from '../components/Activity/Activity.js';
@@ -6,7 +8,7 @@ import Footer from '../components/Footer/Footer.js';
 (() => {
 
 	const routes = {
-		home: '',
+		home: 'home',
 		activity: 'activity',
 	}
 
@@ -21,16 +23,31 @@ import Footer from '../components/Footer/Footer.js';
 			route = routes.home;
 			window.location.hash = `#/${route}`;
 		}
+		events.emit('routeCheck', route);
 	}
 
 	routeCheck();
 
 	window.addEventListener('hashchange', routeCheck);
-	
+
 	const main = document.getElementById('main');
 	const container = document.createElement('div');
 	container.className = 'container';
 	const head = document.createElement('header')
+
+	const components = {
+		[routes.home]: Home,
+		[routes.activity]: Activity,
+	}
+	
+	let willUnmount;
+	const changeComponent = () => {
+		if(willUnmount) {
+			willUnmount();
+		}
+		
+		willUnmount = components[route[0]]({ parent: container })
+	}
 
 	const loadApp = () => {
 		main.firstChild ? main.removeChild(main.firstChild) : null;
@@ -38,9 +55,10 @@ import Footer from '../components/Footer/Footer.js';
 		main.appendChild(container);
 
 		Header({ parent: head });
+		changeComponent();
+		Footer({ parent: main });
 
-		Footer({ parent: main })
-
+		events.subscribe('routeCheck', changeComponent);
 	}
 
 	loadApp();
