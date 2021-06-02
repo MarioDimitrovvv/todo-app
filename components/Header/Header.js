@@ -6,21 +6,20 @@ export default ({parent}) => {
     const render = () => {
         const child = parseHTMLElement(
             `<div>
-                <a href="#">Home</a>
+                <a href="#/">Home</a>
                 <a href="#/activity">My activities</a>
             </div>`
         );
         
         if(unmount) {
-            unmountElement();
+            unmount();
         }
         
         parent.prepend(child);
 
-        const unmountElement = () => parent.remove(child);
+        unmount = () => parent.remove(child);
         
     }
 
     render();
-    
 }
