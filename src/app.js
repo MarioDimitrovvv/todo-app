@@ -4,6 +4,7 @@ import Header from '../components/Header/Header.js';
 import Home from '../components/Home/Home.js';
 import Activity from '../components/Activity/Activity.js';
 import Login from '../components/Login/Login.js';
+import Register from '../components/Register/Register.js';
 import Footer from '../components/Footer/Footer.js';
 
 (() => {
@@ -12,6 +13,7 @@ import Footer from '../components/Footer/Footer.js';
 		home: 'home',
 		activity: 'activity',
 		login: 'login',
+		register: 'register',
 	}
 
 	let route;
@@ -41,6 +43,7 @@ import Footer from '../components/Footer/Footer.js';
 		[routes.home]: Home,
 		[routes.activity]: Activity,
 		[routes.login]: Login,
+		[routes.register]: Register,
 	}
 	
 	let willUnmount;
