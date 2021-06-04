@@ -7,6 +7,7 @@ export default ({parent}) => {
             `<div>
                 <a href="#/home">Home</a>
                 <a href="#/activity">My activities</a>
+                <a href="#/login">Login</a>
             </div>`
         );
         

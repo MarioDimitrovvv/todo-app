@@ -3,6 +3,7 @@ import events from './events.js';
 import Header from '../components/Header/Header.js';
 import Home from '../components/Home/Home.js';
 import Activity from '../components/Activity/Activity.js';
+import Login from '../components/Login/Login.js';
 import Footer from '../components/Footer/Footer.js';
 
 (() => {
@@ -10,6 +11,7 @@ import Footer from '../components/Footer/Footer.js';
 	const routes = {
 		home: 'home',
 		activity: 'activity',
+		login: 'login',
 	}
 
 	let route;
@@ -20,7 +22,7 @@ import Footer from '../components/Footer/Footer.js';
 			route[0] === undefined ||
 			routes[route[0]] === undefined
 		) {
-			route = routes.home;
+			route = [routes.home];
 			window.location.hash = `#/${route}`;
 		}
 		events.emit('routeCheck', route);
@@ -38,6 +40,7 @@ import Footer from '../components/Footer/Footer.js';
 	const components = {
 		[routes.home]: Home,
 		[routes.activity]: Activity,
+		[routes.login]: Login,
 	}
 	
 	let willUnmount;
@@ -45,7 +48,6 @@ import Footer from '../components/Footer/Footer.js';
 		if(willUnmount) {
 			willUnmount();
 		}
-		
 		willUnmount = components[route[0]]({ parent: container })
 	}
 
