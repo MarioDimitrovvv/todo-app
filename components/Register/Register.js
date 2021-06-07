@@ -1,4 +1,5 @@
 import {parseHTMLElements} from '../../src/utils.js'
+import {register} from '../../src/api.js'
 
 export default ({parent}) => {
     const children = parseHTMLElements(
@@ -27,6 +28,7 @@ export default ({parent}) => {
 
         const [username, password, repeatPassword] = [...e.target.querySelectorAll('input')].map(el => el.value.trim());
         console.log(username, password, repeatPassword);
+        register(username, password, repeatPassword);
     })
 
     return () => children.forEach(child => parent.removeChild(child));
