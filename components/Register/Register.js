@@ -27,7 +27,6 @@ export default ({parent}) => {
         e.preventDefault();
 
         const [username, password, repeatPassword] = [...e.target.querySelectorAll('input')].map(el => el.value.trim());
-        console.log(username, password, repeatPassword);
         register(username, password, repeatPassword);
     })
 

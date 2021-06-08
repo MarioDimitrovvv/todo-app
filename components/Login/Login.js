@@ -1,3 +1,4 @@
+import { login } from '../../src/api.js';
 import { parseHTMLElements } from '../../src/utils.js'
 
 export default ({parent}) => {
@@ -21,6 +22,7 @@ export default ({parent}) => {
     children[1].addEventListener('submit', (e) => {
         e.preventDefault();
         const [username, password] = [...document.querySelectorAll('input')].map(el => el.value.trim());
+        login(username, password);
     })
     
     return () => children.forEach(child => parent.removeChild(child));

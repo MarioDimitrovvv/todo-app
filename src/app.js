@@ -31,7 +31,7 @@ import { auth } from './api.js';
 			route = [routes.home];
 			window.location.hash = `#/${route}`;
 		}
-		events.emit('routeCheck', route);
+		events.emit('routeCheck', { route, user });
 	}
 
 	routeCheck();
@@ -63,24 +63,24 @@ import { auth } from './api.js';
 		container.appendChild(head);
 		main.appendChild(container);
 
-		Header({ parent: head , user});
+		Header({ parent: head, user });
 		changeComponent();
 		Footer({ parent: main });
 
 		events.subscribe('routeCheck', changeComponent);
-		events.subscribe('authChange', changeComponent);
+		events.subscribe('authChange', routeCheck);
 	}
 
 
 	auth.onAuthStateChanged((currentUser) => {
 		user = currentUser;
-
+		
 		if (isLoading) {
 			isLoading = false;
-			loadApp()
+			loadApp();
 		}
 
-		events.emit('authCahnge', { user })
+		events.emit('authChange', { user })
 	})
 
 })();

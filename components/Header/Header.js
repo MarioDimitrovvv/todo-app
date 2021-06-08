@@ -1,7 +1,11 @@
+import { logout } from '../../src/api.js';
+import events from '../../src/events.js';
 import { parseHTMLElement } from '../../src/utils.js';
 
 export default ({parent, user}) => {
-    const render = () => {
+    let unmount;
+
+    const render = (user) => {
         const child = parseHTMLElement(
             `<div>
                 <a href="#/home">Home</a>
@@ -13,15 +17,26 @@ export default ({parent, user}) => {
                 }
             </div>`
         );
-        
+
+        if(unmount) {
+            unmount();
+        }
+
         parent.prepend(child);
 
-
+        if(user) {
+            child.querySelector('a:nth-child(3)').addEventListener('click', (е) => {
+                е.preventDefault();
+                logout();
+            })
+        }
         
-        return () => parent.remove(child);
+        unmount = () => parent.removeChild(child);
     }
 
-    render();
+    render(user);
     
-
+    events.subscribe('authChange', ({user}) => {
+        render(user)
+    })
 }

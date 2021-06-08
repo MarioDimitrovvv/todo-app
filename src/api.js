@@ -13,7 +13,6 @@ firebase.initializeApp(firebaseConfig);
 const auth = firebase.auth();
 
 const register = (email, password, repeatPassword) => {
-    console.log('hee');
     if (!email.length) {
         // add message!
         return;
@@ -28,7 +27,7 @@ const register = (email, password, repeatPassword) => {
         // add message
         return;
     }
-    console.log('here');
+
     auth
         .createUserWithEmailAndPassword(email, password)
         .then((user) => {
@@ -38,7 +37,38 @@ const register = (email, password, repeatPassword) => {
         .catch((error) => {
             // add message
         })
-
 }
 
-export { auth, register }
+const login = (email, password) => {
+    if (!email.length) {
+        // add message!
+        return;
+    }
+
+    if (!password.length) {
+        // add message
+        return;
+    }
+    auth
+        .signInWithEmailAndPassword(email, password)
+        .then((user) => {
+            // add message
+            console.log(user);
+        })
+        .catch((error) => {
+            // add message
+        })
+}
+
+const logout = () => {
+    auth
+        .signOut()
+        .then(() => {
+            // notify()
+        })
+        .catch(() => {
+            // notify()
+        })
+}
+
+export { auth, register, login, logout }
