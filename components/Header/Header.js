@@ -37,6 +37,6 @@ export default ({parent, user}) => {
     render(user);
     
     events.subscribe('authChange', ({user}) => {
-        render(user)
+        render(user);
     })
 }

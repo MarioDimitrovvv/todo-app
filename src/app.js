@@ -1,4 +1,5 @@
 import events from './events.js';
+import { auth } from './api.js';
 
 import Header from '../components/Header/Header.js';
 import Home from '../components/Home/Home.js';
@@ -6,7 +7,6 @@ import Activity from '../components/Activity/Activity.js';
 import Login from '../components/Login/Login.js';
 import Register from '../components/Register/Register.js';
 import Footer from '../components/Footer/Footer.js';
-import { auth } from './api.js';
 
 (() => {
 
@@ -20,13 +20,19 @@ import { auth } from './api.js';
 		register: 'register',
 	}
 
+	const nonAuthRoutes = [routes.login, routes.register];
+	const authRoutes = [routes.activity];
+
 	let route;
 
 	const routeCheck = () => {
 		route = window.location.hash.split(/[#\/]/g).filter(x => !!x);
+		console.log(route);
 		if (
 			route[0] === undefined ||
-			routes[route[0]] === undefined
+			routes[route[0]] === undefined ||
+			(!isLoading && user && nonAuthRoutes.includes(route[0])) ||
+			(!isLoading && !user && authRoutes.includes(route[0]))
 		) {
 			route = [routes.home];
 			window.location.hash = `#/${route}`;
@@ -74,7 +80,7 @@ import { auth } from './api.js';
 
 	auth.onAuthStateChanged((currentUser) => {
 		user = currentUser;
-		
+
 		if (isLoading) {
 			isLoading = false;
 			loadApp();
