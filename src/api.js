@@ -14,17 +14,17 @@ const auth = firebase.auth();
 
 const register = (email, password, repeatPassword) => {
     console.log('hee');
-    if(!email.length) {
+    if (!email.length) {
         // add message!
         return;
     }
 
-    if(password.length < 6) {
+    if (password.length < 6) {
         // add message
         return;
     }
 
-    if(password !== repeatPassword) {
+    if (password !== repeatPassword) {
         // add message
         return;
     }
@@ -41,12 +41,4 @@ const register = (email, password, repeatPassword) => {
 
 }
 
-auth.onAuthStateChanged((user) => {
-    if(user) {
-        console.log(user);
-    } else {
-        console.log('there is no user');
-    }
-})
-
-export {register}
+export { auth, register }

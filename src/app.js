@@ -6,8 +6,12 @@ import Activity from '../components/Activity/Activity.js';
 import Login from '../components/Login/Login.js';
 import Register from '../components/Register/Register.js';
 import Footer from '../components/Footer/Footer.js';
+import { auth } from './api.js';
 
 (() => {
+
+	let isLoading = true;
+	let user;
 
 	const routes = {
 		home: 'home',
@@ -45,13 +49,13 @@ import Footer from '../components/Footer/Footer.js';
 		[routes.login]: Login,
 		[routes.register]: Register,
 	}
-	
+
 	let willUnmount;
 	const changeComponent = () => {
-		if(willUnmount) {
+		if (willUnmount) {
 			willUnmount();
 		}
-		willUnmount = components[route[0]]({ parent: container })
+		willUnmount = components[route[0]]({ parent: container, user });
 	}
 
 	const loadApp = () => {
@@ -59,12 +63,24 @@ import Footer from '../components/Footer/Footer.js';
 		container.appendChild(head);
 		main.appendChild(container);
 
-		Header({ parent: head });
+		Header({ parent: head , user});
 		changeComponent();
 		Footer({ parent: main });
 
 		events.subscribe('routeCheck', changeComponent);
+		events.subscribe('authChange', changeComponent);
 	}
 
-	loadApp();
+
+	auth.onAuthStateChanged((currentUser) => {
+		user = currentUser;
+
+		if (isLoading) {
+			isLoading = false;
+			loadApp()
+		}
+
+		events.emit('authCahnge', { user })
+	})
+
 })();
