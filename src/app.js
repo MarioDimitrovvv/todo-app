@@ -27,7 +27,6 @@ import Footer from '../components/Footer/Footer.js';
 
 	const routeCheck = () => {
 		route = window.location.hash.split(/[#\/]/g).filter(x => !!x);
-		console.log(route);
 		if (
 			route[0] === undefined ||
 			routes[route[0]] === undefined ||

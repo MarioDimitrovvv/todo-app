@@ -1,3 +1,5 @@
+import { notify } from './utils.js';
+
 // Your web app's Firebase configuration
 const firebaseConfig = {
     apiKey: "AIzaSyBwdFyceFjZibyR8DvUZRnpsCNU4s5A0Mg",
@@ -14,49 +16,49 @@ const auth = firebase.auth();
 
 const register = (email, password, repeatPassword) => {
     if (!email.length) {
-        // add message!
+        notify('Please enter an email!', 'danger')
         return;
     }
 
     if (password.length < 6) {
-        // add message
+        notify('Password should be at least 6 characters long!', 'danger')
         return;
     }
 
     if (password !== repeatPassword) {
-        // add message
+        notify('Password missmatch!', 'danger')
         return;
     }
 
     auth
         .createUserWithEmailAndPassword(email, password)
         .then((user) => {
-            // add message
+            notify('Successful registration!', 'success')
             console.log(user);
         })
         .catch((error) => {
-            // add message
+            notify(error.message, 'danger')
+
         })
 }
 
 const login = (email, password) => {
     if (!email.length) {
-        // add message!
+        notify('Please enter an email!', 'danger')
         return;
     }
 
     if (!password.length) {
-        // add message
+        notify('Please enter a password!', 'danger')
         return;
     }
     auth
         .signInWithEmailAndPassword(email, password)
         .then((user) => {
-            // add message
-            console.log(user);
+            notify('Successful login!', 'success')
         })
         .catch((error) => {
-            // add message
+            notify(error.message, 'danger')
         })
 }
 
@@ -64,10 +66,10 @@ const logout = () => {
     auth
         .signOut()
         .then(() => {
-            // notify()
+            notify('Successful logout!', 'success')
         })
-        .catch(() => {
-            // notify()
+        .catch((error) => {
+            notify(error.message, 'danger')
         })
 }
 
