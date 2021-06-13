@@ -4,6 +4,7 @@ import { notify } from './utils.js';
 const firebaseConfig = {
     apiKey: "AIzaSyBwdFyceFjZibyR8DvUZRnpsCNU4s5A0Mg",
     authDomain: "to-do-app-965ac.firebaseapp.com",
+    databaseURL: "https://to-do-app-965ac-default-rtdb.europe-west1.firebasedatabase.app",
     projectId: "to-do-app-965ac",
     storageBucket: "to-do-app-965ac.appspot.com",
     messagingSenderId: "527593974371",
@@ -13,6 +14,7 @@ const firebaseConfig = {
 firebase.initializeApp(firebaseConfig);
 
 const auth = firebase.auth();
+const database = firebase.database();
 
 const register = (email, password, repeatPassword) => {
     if (!email.length) {
@@ -73,4 +75,17 @@ const logout = () => {
         })
 }
 
-export { auth, register, login, logout }
+let userUID;
+const listenUserTasks = (user) => {
+    userUID = user.uid;
+}
+
+function addTask(task) {
+    const newPostKey = database.ref().child('users').child(userUID).push().key;
+    const updates = {};
+    updates[`/users/${userUID}/${newPostKey}`] = task;
+    return database.ref().update(updates);
+}
+
+
+export { auth, register, login, logout, listenUserTasks, addTask }

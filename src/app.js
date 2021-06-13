@@ -1,5 +1,5 @@
 import events from './events.js';
-import { auth } from './api.js';
+import { auth, listenUserTasks } from './api.js';
 
 import Header from '../components/Header/Header.js';
 import Home from '../components/Home/Home.js';
@@ -83,6 +83,10 @@ import Footer from '../components/Footer/Footer.js';
 		if (isLoading) {
 			isLoading = false;
 			loadApp();
+		}
+
+		if (user) {
+			listenUserTasks(user);
 		}
 
 		events.emit('authChange', { user })
