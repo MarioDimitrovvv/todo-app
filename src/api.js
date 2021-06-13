@@ -1,5 +1,7 @@
 import { notify } from './utils.js';
 
+// GUARD ADDING ACTIVITIES WITHOUT LOGGING IN!!!
+
 // Your web app's Firebase configuration
 const firebaseConfig = {
     apiKey: "AIzaSyBwdFyceFjZibyR8DvUZRnpsCNU4s5A0Mg",
@@ -36,7 +38,6 @@ const register = (email, password, repeatPassword) => {
         .createUserWithEmailAndPassword(email, password)
         .then((user) => {
             notify('Successful registration!', 'success')
-            console.log(user);
         })
         .catch((error) => {
             notify(error.message, 'danger')
@@ -68,7 +69,8 @@ const logout = () => {
     auth
         .signOut()
         .then(() => {
-            notify('Successful logout!', 'success')
+            notify('Successful logout!', 'success');
+            userUID = null;
         })
         .catch((error) => {
             notify(error.message, 'danger')
@@ -81,11 +83,16 @@ const listenUserTasks = (user) => {
 }
 
 function addTask(task) {
+    if (!userUID) return;
     const newPostKey = database.ref().child('users').child(userUID).push().key;
     const updates = {};
     updates[`/users/${userUID}/${newPostKey}`] = task;
-    return database.ref().update(updates);
+
+    return database.ref().update(updates, err => {
+        if (err) return notify(err.message, 'danger');
+        notify('Successfully added task!', 'success');
+    });
 }
 
 
-export { auth, register, login, logout, listenUserTasks, addTask }
+export { auth, database, register, login, logout, listenUserTasks, addTask}
