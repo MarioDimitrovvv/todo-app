@@ -1,4 +1,4 @@
-import { database, doneTask } from '../../src/api.js';
+import { database, deleteTask, doneTask } from '../../src/api.js';
 import { parseHTMLElement, parseHTMLElements } from '../../src/utils.js';
 
 export default ({ parent, user }) => {
@@ -38,7 +38,10 @@ export default ({ parent, user }) => {
             const elementId = element.getAttribute('data-key');
             if(e.target.innerText === 'Done') {
                 doneTask(elementId)
-                .then(() => element.className = 'marked');
+                    .then(() => element.className = 'marked');
+            } else if(e.target.innerText === 'Remove'){
+                deleteTask(elementId)
+                    .then(() => element.parentNode.removeChild(element));
             }
         }
             

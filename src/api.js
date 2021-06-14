@@ -105,5 +105,12 @@ function doneTask(id) {
     });
 }
 
+function deleteTask(id) {
+    return database.ref(`/users/${userUID}/${id}`)
+        .remove()
+        .then(() => notify('You delete the task!', 'success'))
+        .catch(err => notify(err.message, 'error'))
+}
 
-export { auth, database, register, login, logout, listenUserTasks, addTask, doneTask}
+
+export { auth, database, register, login, logout, listenUserTasks, addTask, doneTask, deleteTask}
