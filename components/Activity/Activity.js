@@ -23,7 +23,7 @@ export default ({ parent, user }) => {
                     return `
                     <li data-key=${key} ${done ? 'class="marked"' : ''}>
                     <span>${task}</span>
-                    <button>Done</button>
+                    <button>${done ? 'Undo' : 'Done'}</button>
                     <button>Remove</button>
                     </li>`
                 })
@@ -34,14 +34,24 @@ export default ({ parent, user }) => {
 
     child.querySelector('ul').addEventListener('click', (e) => {
         if(e.target.tagName === 'BUTTON') {
-            const element = e.target.parentNode;
-            const elementId = element.getAttribute('data-key');
-            if(e.target.innerText === 'Done') {
-                doneTask(elementId)
-                    .then(() => element.className = 'marked');
-            } else if(e.target.innerText === 'Remove'){
-                deleteTask(elementId)
-                    .then(() => element.parentNode.removeChild(element));
+            const buttonElement = e.target;
+            const parentElement = e.target.parentNode;
+            const parentElementId = parentElement.getAttribute('data-key');
+            if(buttonElement.innerText === 'Done') {
+                doneTask(parentElementId, 'done')
+                    .then(() => {
+                        parentElement.className = 'marked';
+                        buttonElement.innerText = 'Undo';
+                    });
+            } else if(buttonElement.innerText === 'Remove'){
+                deleteTask(parentElementId)
+                    .then(() => parentElement.parentNode.removeChild(parentElement));
+            } else if(buttonElement.innerText === 'Undo') {
+                doneTask(parentElementId)
+                    .then(() => {
+                        parentElement.classList.remove('marked');
+                        buttonElement.innerText = 'Done';
+                    })
             }
         }
             

@@ -94,14 +94,14 @@ function addTask(task) {
     });
 }
 
-function doneTask(id) {
+function doneTask(id, type = false) {
     if (!userUID) return;
     const updates = {};
-    updates[`/users/${userUID}/${id}/done`] = true ;
+    updates[`/users/${userUID}/${id}/done`] = !!type ;
 
     return database.ref().update(updates, err => {
         if (err) return notify(err.message, 'danger');
-        notify('Successfully doned task!', 'success');
+        notify(`Successfully ${type ? 'done' : 'undo'} task!`, 'success');
     });
 }
 
