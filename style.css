@@ -5,3 +5,7 @@
 .success {
     background-color: greenyellow;
 }
+
+.marked {
+    text-decoration: line-through;
+}

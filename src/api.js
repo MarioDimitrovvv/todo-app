@@ -86,7 +86,7 @@ function addTask(task) {
     if (!userUID) return;
     const newPostKey = database.ref().child('users').child(userUID).push().key;
     const updates = {};
-    updates[`/users/${userUID}/${newPostKey}`] = task;
+    updates[`/users/${userUID}/${newPostKey}`] = {task, done: false};
 
     return database.ref().update(updates, err => {
         if (err) return notify(err.message, 'danger');
@@ -94,5 +94,16 @@ function addTask(task) {
     });
 }
 
+function doneTask(id) {
+    if (!userUID) return;
+    const updates = {};
+    updates[`/users/${userUID}/${id}/done`] = true ;
 
-export { auth, database, register, login, logout, listenUserTasks, addTask}
+    return database.ref().update(updates, err => {
+        if (err) return notify(err.message, 'danger');
+        notify('Successfully doned task!', 'success');
+    });
+}
+
+
+export { auth, database, register, login, logout, listenUserTasks, addTask, doneTask}

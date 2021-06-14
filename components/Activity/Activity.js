@@ -1,30 +1,51 @@
-import { database } from '../../src/api.js';
-import { parseHTMLElements } from '../../src/utils.js';
+import { database, doneTask } from '../../src/api.js';
+import { parseHTMLElement, parseHTMLElements } from '../../src/utils.js';
 
 export default ({ parent, user }) => {
     let isMounted = true;
-    const children = parseHTMLElements(`
-        <h3>This is activity page!</h3>
-    `);
 
-    parent.append(...children);
+    const child = parseHTMLElement(`
+        <div>
+        <h3>This is activity page!</h3>
+        <ul></ul>
+        </div>
+        `);
+
+
+    parent.append(child);
 
     database.ref(`/users/${user.uid}`).once('value', snapshot => {
         if (!isMounted) return;
         if (snapshot.exists()) {
+            const ulElement = child.querySelector('ul');
             const tasks = parseHTMLElements(
-                ...Object.values(snapshot.val()).map(x => {
-                    // make it more complicated
-                    return `<div>${x}</div>`;
+                ...Object.entries(snapshot.val()).map(([key, { task, done }]) => {
+                    return `
+                    <li data-key=${key} ${done ? 'class="marked"' : ''}>
+                    <span>${task}</span>
+                    <button>Done</button>
+                    <button>Remove</button>
+                    </li>`
                 })
             );
-            console.log( ...tasks);
-            children[children.length - 1].append(...tasks);
+            ulElement.append(...tasks);
         }
+    })
+
+    child.querySelector('ul').addEventListener('click', (e) => {
+        if(e.target.tagName === 'BUTTON') {
+            const element = e.target.parentNode;
+            const elementId = element.getAttribute('data-key');
+            if(e.target.innerText === 'Done') {
+                doneTask(elementId)
+                .then(() => element.className = 'marked');
+            }
+        }
+            
     })
 
     return () => {
         isMounted = false;
-        children.forEach(child => parent.removeChild(child));
+        parent.removeChild(child);
     }
 }
