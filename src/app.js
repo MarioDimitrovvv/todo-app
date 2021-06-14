@@ -1,5 +1,6 @@
 import events from './events.js';
-import { auth, listenUserTasks } from './api.js';
+import { auth } from './api/authService.js';
+import { listenUserTasks } from './api/tasksService.js';
 
 import Header from '../components/Header/Header.js';
 import Home from '../components/Home/Home.js';

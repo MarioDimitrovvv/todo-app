@@ -1,4 +1,4 @@
-import { logout } from '../../src/api.js';
+import { logout } from '../../src/api/authService.js';
 import events from '../../src/events.js';
 import { parseHTMLElement } from '../../src/utils.js';
 

@@ -1,8 +1,5 @@
-import { notify } from './utils.js';
+import { notify } from '../utils.js';
 
-// GUARD ADDING ACTIVITIES WITHOUT LOGGING IN!!!
-
-// Your web app's Firebase configuration
 const firebaseConfig = {
     apiKey: "AIzaSyBwdFyceFjZibyR8DvUZRnpsCNU4s5A0Mg",
     authDomain: "to-do-app-965ac.firebaseapp.com",
@@ -16,7 +13,6 @@ const firebaseConfig = {
 firebase.initializeApp(firebaseConfig);
 
 const auth = firebase.auth();
-const database = firebase.database();
 
 const register = (email, password, repeatPassword) => {
     if (!email.length) {
@@ -77,40 +73,4 @@ const logout = () => {
         })
 }
 
-let userUID;
-const listenUserTasks = (user) => {
-    userUID = user.uid;
-}
-
-function addTask(task) {
-    if (!userUID) return;
-    const newPostKey = database.ref().child('users').child(userUID).push().key;
-    const updates = {};
-    updates[`/users/${userUID}/${newPostKey}`] = {task, done: false};
-
-    return database.ref().update(updates, err => {
-        if (err) return notify(err.message, 'danger');
-        notify('Successfully added task!', 'success');
-    });
-}
-
-function doneTask(id, type = false) {
-    if (!userUID) return;
-    const updates = {};
-    updates[`/users/${userUID}/${id}/done`] = !!type ;
-
-    return database.ref().update(updates, err => {
-        if (err) return notify(err.message, 'danger');
-        notify(`Successfully ${type ? 'done' : 'undo'} task!`, 'success');
-    });
-}
-
-function deleteTask(id) {
-    return database.ref(`/users/${userUID}/${id}`)
-        .remove()
-        .then(() => notify('You delete the task!', 'success'))
-        .catch(err => notify(err.message, 'error'))
-}
-
-
-export { auth, database, register, login, logout, listenUserTasks, addTask, doneTask, deleteTask}
+export { auth, register, login, logout }

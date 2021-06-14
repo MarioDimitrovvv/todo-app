@@ -1,5 +1,5 @@
-import {parseHTMLElements} from '../../src/utils.js'
-import {register} from '../../src/api.js'
+import {parseHTMLElements} from '../../src/utils.js';
+import {register} from '../../src/api/authService.js';
 
 export default ({parent}) => {
     const children = parseHTMLElements(

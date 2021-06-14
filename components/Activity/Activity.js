@@ -1,4 +1,4 @@
-import { database, deleteTask, doneTask } from '../../src/api.js';
+import { database, deleteTask, doneTask } from '../../src/api/tasksService.js';
 import { parseHTMLElement, parseHTMLElements } from '../../src/utils.js';
 
 export default ({ parent, user }) => {
@@ -6,8 +6,8 @@ export default ({ parent, user }) => {
 
     const child = parseHTMLElement(`
         <div>
-        <h3>This is activity page!</h3>
-        <ul></ul>
+            <h3>This is activity page!</h3>
+            <ul></ul>
         </div>
         `);
 
@@ -33,28 +33,34 @@ export default ({ parent, user }) => {
     })
 
     child.querySelector('ul').addEventListener('click', (e) => {
-        if(e.target.tagName === 'BUTTON') {
+        if (e.target.tagName === 'BUTTON') {
             const buttonElement = e.target;
             const parentElement = e.target.parentNode;
             const parentElementId = parentElement.getAttribute('data-key');
-            if(buttonElement.innerText === 'Done') {
-                doneTask(parentElementId, 'done')
-                    .then(() => {
-                        parentElement.className = 'marked';
-                        buttonElement.innerText = 'Undo';
-                    });
-            } else if(buttonElement.innerText === 'Remove'){
-                deleteTask(parentElementId)
-                    .then(() => parentElement.parentNode.removeChild(parentElement));
-            } else if(buttonElement.innerText === 'Undo') {
-                doneTask(parentElementId)
-                    .then(() => {
-                        parentElement.classList.remove('marked');
-                        buttonElement.innerText = 'Done';
-                    })
+
+            switch (buttonElement.innerText) {
+                case 'Done':
+                    doneTask(parentElementId, 'done')
+                        .then(() => {
+                            parentElement.className = 'marked';
+                            buttonElement.innerText = 'Undo';
+                        });
+                    break;
+
+                case 'Remove':
+                    deleteTask(parentElementId)
+                        .then(() => parentElement.parentNode.removeChild(parentElement));
+                    break;
+
+                case 'Undo':
+                    doneTask(parentElementId)
+                        .then(() => {
+                            parentElement.classList.remove('marked');
+                            buttonElement.innerText = 'Done';
+                        })
+                    break;
             }
         }
-            
     })
 
     return () => {

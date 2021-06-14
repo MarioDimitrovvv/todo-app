@@ -1,5 +1,5 @@
 import { parseHTMLElement } from '../../src/utils.js';
-import {addTask} from '../../src/api.js'
+import {addTask} from '../../src/api/tasksService.js'
 
 export default ({parent, user}) => {
     const child = parseHTMLElement(`

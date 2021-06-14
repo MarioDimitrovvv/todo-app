@@ -1,4 +1,4 @@
-import { login } from '../../src/api.js';
+import { login } from '../../src/api/authService.js';
 import { parseHTMLElements } from '../../src/utils.js'
 
 export default ({parent}) => {
