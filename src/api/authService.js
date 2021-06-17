@@ -66,7 +66,6 @@ const logout = () => {
         .signOut()
         .then(() => {
             notify('Successful logout!', 'success');
-            userUID = null;
         })
         .catch((error) => {
             notify(error.message, 'danger')

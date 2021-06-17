@@ -1,3 +1,54 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body{
+    background-image: linear-gradient(120deg, #f6d365, #fda085);
+    color: white;
+    font-family: "Popins", sans-serif;
+    min-height: 100vh;
+}
+
+.header {
+    font-size: 1.5rem;
+}
+
+.header a {
+    text-decoration: none;
+}
+
+.main-part {
+    min-height: 20vh;
+    display: table;
+    margin-right: auto;
+    margin-left: auto;
+}
+
+.item{
+    list-style: none;
+    margin: 1rem;
+    min-width: 30%;
+    background: white;
+    color: black;
+    font-size: 1.5rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.item div {
+    flex: 1;
+}
+
+.item i {
+    font-size: 1rem;
+    border: none;
+    margin-right: 0.5rem;
+    background-color: white;
+    cursor: pointer;
+    color: turquoise;
+}
 .danger {
     background-color: red;
 }

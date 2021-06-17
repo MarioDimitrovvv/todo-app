@@ -7,7 +7,7 @@ export default ({parent, user}) => {
 
     const render = (user) => {
         const child = parseHTMLElement(
-            `<div>
+            `<div class="header">
                 <a href="#/home">Home</a>
                 <a href="#/activity">My activities</a>
                 ${user 

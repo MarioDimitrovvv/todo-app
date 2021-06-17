@@ -3,14 +3,14 @@ import {addTask} from '../../src/api/tasksService.js'
 
 export default ({parent, user}) => {
     const child = parseHTMLElement(`
-        <div>
+        <div class="main-part">
             <h1>This is home page!</h1>
             ${user ? `<p>Welcome, ${user.email}!` : ''}
             ${user ? 
                 `<form>
-                <label for="activity">Activity:</form>
-                <input type="text" name="activity" />
-                <input type="submit" value="Add activity" />
+                    <label for="activity">Activity:</form>
+                    <input type="text" name="activity" />
+                    <button type="submit"><i class="far fa-plus-square"></i></button>
                 </form>` : ''}
         </div>`);
 

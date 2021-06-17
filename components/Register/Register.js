@@ -5,15 +5,15 @@ export default ({parent}) => {
     const children = parseHTMLElements(
         '<h1>Register Form</h1>',
         `<form>
-            <div>
+            <div class="form-elements">
                 <label for="userName">Username:</label>
                 <input type="text" name="userName" />
             </div>
-            <div>
+            <div class="form-elements">
                 <label for="password">Password:</label>
                 <input type="password" name="password" />
             </div>
-            <div>
+            <div class="form-elements">
                 <label for="passwordRepeat">Repeat Password:</label>
                 <input type="password" name="passwordRepeat" />
             </div>

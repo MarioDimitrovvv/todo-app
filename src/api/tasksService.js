@@ -1,5 +1,7 @@
 import { notify } from '../utils.js';
 
+// MAKE GUARD FOR ADD ACTIVITIES WITHOUT USERUID
+
 const database = firebase.database();
 
 let userUID;

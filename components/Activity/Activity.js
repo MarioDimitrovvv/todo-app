@@ -5,9 +5,9 @@ export default ({ parent, user }) => {
     let isMounted = true;
 
     const child = parseHTMLElement(`
-        <div>
-            <h3>This is activity page!</h3>
-            <ul></ul>
+        <div class="main-part">
+            <h1>This is activity page!</h1>
+            <ul class="list"></ul>
         </div>
         `);
 
@@ -21,29 +21,33 @@ export default ({ parent, user }) => {
             const tasks = parseHTMLElements(
                 ...Object.entries(snapshot.val()).map(([key, { task, done }]) => {
                     return `
-                    <li data-key=${key} ${done ? 'class="marked"' : ''}>
-                    <span>${task}</span>
-                    <button>${done ? 'Undo' : 'Done'}</button>
-                    <button>Remove</button>
+                    <li data-key=${key} class="item">
+                        <div class="${done ? 'marked' : ''}">${task}</div>
+                        ${done ? '<i class="fas fa-undo-alt" data-value="Undo"></i>' : '<i class="fas fa-check-square" data-value="Done"></i>'}
+                        <i class="fas fa-trash-alt" data-value="Remove"></i>
                     </li>`
                 })
-            );
-            ulElement.append(...tasks);
+                );
+                ulElement.append(...tasks);
+                
         }
     })
 
     child.querySelector('ul').addEventListener('click', (e) => {
-        if (e.target.tagName === 'BUTTON') {
-            const buttonElement = e.target;
+        console.log(e.target.tagName);
+        if (e.target.tagName === 'I') {
+            const iElement = e.target;
+            const iElementValue = iElement.getAttribute('data-value');
             const parentElement = e.target.parentNode;
+            const divElement = parentElement.querySelector('div');
             const parentElementId = parentElement.getAttribute('data-key');
 
-            switch (buttonElement.innerText) {
+            switch (iElementValue) {
                 case 'Done':
                     doneTask(parentElementId, 'done')
                         .then(() => {
-                            parentElement.className = 'marked';
-                            buttonElement.innerText = 'Undo';
+                            divElement.className = 'marked';
+                            iElement = '<i class="fas fa-undo-alt" data-value="Undo"></i>';
                         });
                     break;
 
@@ -55,8 +59,8 @@ export default ({ parent, user }) => {
                 case 'Undo':
                     doneTask(parentElementId)
                         .then(() => {
-                            parentElement.classList.remove('marked');
-                            buttonElement.innerText = 'Done';
+                            divElement.classList.remove('marked');
+                            iElement.innerHTML = '<i class="fas fa-check-square" data-value="Done"></i>';
                         })
                     break;
             }
