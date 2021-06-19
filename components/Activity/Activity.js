@@ -47,7 +47,8 @@ export default ({ parent, user }) => {
                     doneTask(parentElementId, 'done')
                         .then(() => {
                             divElement.className = 'marked';
-                            iElement = '<i class="fas fa-undo-alt" data-value="Undo"></i>';
+                            parentElement.replaceChild(parseHTMLElement('<i class="fas fa-undo-alt" data-value="Undo"></i>'), iElement)
+                            // iElement.innerHTML = '<i class="fas fa-undo-alt" data-value="Undo"></i>';
                         });
                     break;
 
@@ -60,7 +61,8 @@ export default ({ parent, user }) => {
                     doneTask(parentElementId)
                         .then(() => {
                             divElement.classList.remove('marked');
-                            iElement.innerHTML = '<i class="fas fa-check-square" data-value="Done"></i>';
+                            parentElement.replaceChild(parseHTMLElement('<i class="fas fa-check-square" data-value="Done"></i>'), iElement)
+                            // iElement.innerHTML = '<i class="fas fa-check-square" data-value="Done"></i>';
                         })
                     break;
             }
