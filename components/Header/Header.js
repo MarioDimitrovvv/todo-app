@@ -9,9 +9,11 @@ export default ({parent, user}) => {
         const child = parseHTMLElement(
             `<div class="header">
                 <a href="#/home">Home</a>
-                <a href="#/activity">My activities</a>
                 ${user 
-                    ? `<a href="#/logout">Logout</a>`
+                    ? `
+                        <a href="#/activity">My activities</a>
+                        <a href="#/logout">Logout</a>
+                        `
                     : `<a href="#/login">Login</a>
                        <a href="#/register">Register</a>`
                 }
