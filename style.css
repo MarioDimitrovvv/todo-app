@@ -19,12 +19,39 @@ body{
     text-decoration: none;
 }
 
-.main-part {
-    min-height: 20vh;
+.main-part, h1 {
+    margin-top: 5vh;
+    min-height: 13vh;
     display: table;
     margin-right: auto;
     margin-left: auto;
 }
+
+/* ------- */
+
+.greeting {
+    color: lightslategray;
+    font-size: 1.5rem;
+}
+
+.todo-form {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.5rem;
+    margin-top: 3vh;
+}
+
+.todo-form input,
+.todo-form i,
+.todo-form button {
+    border: none;
+    color: black;
+    background-color: white;
+    font-size: 1.2rem;
+}
+
+/* ------- */
 
 .item{
     list-style: none;
@@ -44,11 +71,17 @@ body{
 .item i {
     font-size: 1rem;
     border: none;
-    margin-right: 0.5rem;
     background-color: white;
     cursor: pointer;
     color: turquoise;
 }
+/* ------- */
+.form-elements {
+    padding: 1vh;
+}
+
+
+/* ------- */
 .danger {
     background-color: red;
 }

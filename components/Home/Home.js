@@ -5,12 +5,12 @@ export default ({parent, user}) => {
     const child = parseHTMLElement(`
         <div class="main-part">
             <h1>This is home page!</h1>
-            ${user ? `<p>Welcome, ${user.email}!` : ''}
+            ${user ? `<p class="greeting">Welcome, ${user.email}!` : ''}
             ${user ? 
-                `<form>
-                    <label for="activity">Activity:</form>
+                `<form class="todo-form">
+                    <label for="activity">Activity:</label>
                     <input type="text" name="activity" />
-                    <button type="submit"><i class="far fa-plus-square"></i></button>
+                    <button type="submit"<i class="fas fa-plus"></i></button>
                 </form>` : ''}
         </div>`);
 
