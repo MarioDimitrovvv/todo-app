@@ -1,8 +1,8 @@
-#ToDo App
+# ToDo App
 
-##ToDo App is basic task manager which is written in VanillaJS with authentication and database from firebase.
+## ToDo App is basic task manager which is written in VanillaJS with authentication and database from firebase.
 
-###How to run the program
+### How to run the program
 
 #### `npm i`
 
