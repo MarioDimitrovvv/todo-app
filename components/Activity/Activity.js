@@ -14,9 +14,9 @@ export default ({ parent, user }) => {
 
     parent.append(child);
 
+    const ulElement = child.querySelector('ul');
     database.ref(`/users/${user.uid}`).once('value', snapshot => {
         if (!isMounted) return;
-        const ulElement = child.querySelector('ul');
         if (snapshot.exists()) {
             const tasks = parseHTMLElements(
                 ...Object.entries(snapshot.val()).map(([key, { task, done }]) => {
@@ -31,7 +31,7 @@ export default ({ parent, user }) => {
                 ulElement.append(...tasks);
                 
         } else {
-            ulElement.appendChild(parseHTMLElement('<h3>You don\'t have any tasks!</h3>'))
+            ulElement.appendChild(parseHTMLElement('<h3>You don\'t have any tasks!</h3>'));
         }
     })
 
@@ -54,7 +54,12 @@ export default ({ parent, user }) => {
 
                 case 'Remove':
                     deleteTask(parentElementId)
-                        .then(() => parentElement.parentNode.removeChild(parentElement));
+                        .then(() => {
+                            parentElement.parentNode.removeChild(parentElement)
+                            if(!ulElement.firstElementChild){
+                                ulElement.appendChild(parseHTMLElement('<h3>You don\'t have any tasks!</h3>'));
+                            }
+                        });
                     break;
 
                 case 'Undo':
