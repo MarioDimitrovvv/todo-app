@@ -3,20 +3,11 @@ import {register} from '../../src/api/authService.js';
 
 export default ({parent}) => {
     const children = parseHTMLElements(
-        '<h1>Register Form</h1>',
-        `<form class="main-part">
-            <div class="form-elements">
-                <label for="userName">Username:</label>
-                <input type="text" name="userName" />
-            </div>
-            <div class="form-elements">
-                <label for="password">Password:</label>
-                <input type="password" name="password" />
-            </div>
-            <div class="form-elements">
-                <label for="passwordRepeat">Repeat Password:</label>
-                <input type="password" name="passwordRepeat" />
-            </div>
+        '<h1>Register Page</h1>',
+        `<form class="main-part register">
+            <input type="text" name="userName" placeholder="Email"/>
+            <input type="password" name="password" placeholder="Password" />
+            <input type="password" name="passwordRepeat" placeholder="Repeated Password" />
             <input type="submit" value="Register" />
         </form>`
     )

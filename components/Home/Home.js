@@ -11,7 +11,8 @@ export default ({parent, user}) => {
                     <label for="activity">Activity:</label>
                     <input type="text" name="activity" />
                     <button type="submit"<i class="fas fa-plus"></i></button>
-                </form>` : ''}
+                </form>` 
+                : '<h2>You are not logged in!</h2>'}
         </div>`);
 
     parent.append(child);
