@@ -6,7 +6,7 @@ export default ({ parent, user }) => {
 
     const child = parseHTMLElement(`
         <div class="main-part">
-            <h1>This is activity page!</h1>
+            <h1>Here are your tasks!</h1>
             <ul class="list"></ul>
         </div>
         `);
@@ -16,8 +16,8 @@ export default ({ parent, user }) => {
 
     database.ref(`/users/${user.uid}`).once('value', snapshot => {
         if (!isMounted) return;
+        const ulElement = child.querySelector('ul');
         if (snapshot.exists()) {
-            const ulElement = child.querySelector('ul');
             const tasks = parseHTMLElements(
                 ...Object.entries(snapshot.val()).map(([key, { task, done }]) => {
                     return `
@@ -30,11 +30,12 @@ export default ({ parent, user }) => {
                 );
                 ulElement.append(...tasks);
                 
+        } else {
+            ulElement.appendChild(parseHTMLElement('<h3>You don\'t have any tasks!</h3>'))
         }
     })
 
     child.querySelector('ul').addEventListener('click', (e) => {
-        console.log(e.target.tagName);
         if (e.target.tagName === 'I') {
             const iElement = e.target;
             const iElementValue = iElement.getAttribute('data-value');
@@ -48,7 +49,6 @@ export default ({ parent, user }) => {
                         .then(() => {
                             divElement.className = 'marked';
                             parentElement.replaceChild(parseHTMLElement('<i class="fas fa-undo-alt" data-value="Undo"></i>'), iElement)
-                            // iElement.innerHTML = '<i class="fas fa-undo-alt" data-value="Undo"></i>';
                         });
                     break;
 
@@ -62,7 +62,6 @@ export default ({ parent, user }) => {
                         .then(() => {
                             divElement.classList.remove('marked');
                             parentElement.replaceChild(parseHTMLElement('<i class="fas fa-check-square" data-value="Done"></i>'), iElement)
-                            // iElement.innerHTML = '<i class="fas fa-check-square" data-value="Done"></i>';
                         })
                     break;
             }

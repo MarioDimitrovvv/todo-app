@@ -20,11 +20,14 @@ body{
 }
 
 .main-part, h1 {
-    margin-top: 5vh;
     min-height: 13vh;
     display: table;
     margin-right: auto;
     margin-left: auto;
+}
+
+h1 {
+    margin-top: 5vh;
 }
 
 /* ------- */
@@ -76,11 +79,6 @@ body{
     color: turquoise;
 }
 /* ------- */
-/* .form-elements input,
-.form-elements label {
-    padding: 1vh;
-    font-size: 1rem;
-} */
 
 .login,
 .register {
@@ -90,8 +88,7 @@ body{
     width: 400px;
 }
 
-input[type=text],
-input[type=password] {
+.auth-input {
     display: block;
     border-radius: 5px;
     font-size: 1rem;

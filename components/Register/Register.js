@@ -5,9 +5,9 @@ export default ({parent}) => {
     const children = parseHTMLElements(
         '<h1>Register Page</h1>',
         `<form class="main-part register">
-            <input type="text" name="userName" placeholder="Email"/>
-            <input type="password" name="password" placeholder="Password" />
-            <input type="password" name="passwordRepeat" placeholder="Repeated Password" />
+            <input type="text" class="auth-input" name="userName" placeholder="Email"/>
+            <input type="password" class="auth-input" name="password" placeholder="Password" />
+            <input type="password" class="auth-input" name="passwordRepeat" placeholder="Repeated Password" />
             <input type="submit" value="Register" />
         </form>`
     )

@@ -6,8 +6,8 @@ export default ({parent}) => {
     const children = parseHTMLElements(
         '<h1>Login Page</h1>',
         `<form class="main-part login">
-            <input type="text" name="userName" placeholder="Email" />
-            <input type="password" name="password" placeholder="Password" />
+            <input type="text" class="auth-input" name="userName" placeholder="Email" />
+            <input type="password" class="auth-input" name="password" placeholder="Password" />
             <input type="submit" value="Login" />
         </form>`);
 
