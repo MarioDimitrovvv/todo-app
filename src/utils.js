@@ -3,13 +3,27 @@ export const parseHTMLElement = (htmlString) =>
     
 export const parseHTMLElements = (...htmlStrings) => htmlStrings.map(parseHTMLElement);
 
-export const notify = (msg, type) => {
-    const notificationElement = document.createElement('div');
-    notificationElement.className = 'notification ' + type;
-    notificationElement.innerText = msg;
+export const notify = (() => {
 
-    document.querySelector('.container').appendChild(notificationElement);
-    window.setTimeout(() => {
-        document.querySelector('.container').removeChild(notificationElement);
-    }, 2000)
-}
+    const notifications = parseHTMLElement(`<div class="notifications"></div>`)
+    document.querySelector('body').prepend(notifications)
+
+    const remove = (child) => {
+        if(notifications.contains(child)) {
+            notifications.removeChild(child);
+        }
+    }
+    
+    return (msg, type) => {
+        const notification = parseHTMLElement(`
+            <div class="notification ${type}">
+                <div class="notif-content">${msg}</div>
+                <div class="notif-close ${type}">X</div>
+            </div>`)
+        
+        notifications.appendChild(notification);
+        window.setTimeout(() => remove(notification), 3000);
+        console.log(notification.lastChild);
+        notification.querySelector('div:nth-child(2)').addEventListener('click', () => remove(notification));
+    }
+})();
