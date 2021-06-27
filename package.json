@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "http-server -o --cors --proxy http://localhost:8080"
+    "start": "http-server -o --cors"
   },
   "repository": {
     "type": "git",

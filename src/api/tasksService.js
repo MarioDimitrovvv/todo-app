@@ -11,6 +11,7 @@ const listenUserTasks = (user) => {
 
 function addTask(task) {
     if (!userUID) return;
+    if(!task) return notify('The format of the task is invalid', 'danger');
     const newPostKey = database.ref().child('users').child(userUID).push().key;
     const updates = {};
     updates[`/users/${userUID}/${newPostKey}`] = { task, done: false };
